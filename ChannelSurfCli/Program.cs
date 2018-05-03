@@ -24,10 +24,11 @@ namespace ChannelSurfCli
         // Read all users' full profiles
         // Read and write all groups
 
-        const string aadResourceAppId = "00000003-0000-0000-c000-000000000000";
+        public const string aadResourceAppId = "00000003-0000-0000-c000-000000000000";
 
-        static AuthenticationContext authenticationContext = null;
+        public static AuthenticationContext authenticationContext = null;
         static AuthenticationResult authenticationResult = null;
+        //public static string aadAccessToken;
 
         static void Main(string[] args)
         {
@@ -84,7 +85,7 @@ namespace ChannelSurfCli
                     Configuration["AzureAd:TenantId"] = Console.ReadLine();
                     Console.Write("Azure Active Directory Application ID: ");
                     Configuration["AzureAd:ClientId"] = Console.ReadLine();
-                Console.WriteLine("****************************************************************************************************");
+                    Console.WriteLine("****************************************************************************************************");
                 }
 
                 Console.WriteLine("**************************************************");
@@ -105,9 +106,10 @@ namespace ChannelSurfCli
                 Console.WriteLine("****************************************************************************************************");
                 Console.WriteLine("Let's get started! Sign in to Microsoft with your Teams credentials:");
 
-                authenticationResult = UserLogin();
+                AuthenticationResult authenticationResult = UserLogin();
                 var aadAccessToken = authenticationResult.AccessToken;
-
+                
+              
                 if (String.IsNullOrEmpty(authenticationResult.AccessToken))
                 {
                     Console.WriteLine("Something went wrong.  Please try again!");
@@ -118,6 +120,8 @@ namespace ChannelSurfCli
                     Console.WriteLine("You've successfully signed in.  Welcome " + authenticationResult.UserInfo.DisplayableId);
                 }
 
+
+              
                 var selectedTeamId = Utils.Channels.SelectJoinedTeam(aadAccessToken);
                 if (selectedTeamId == "")
                 {
@@ -151,45 +155,51 @@ namespace ChannelSurfCli
 
                 Console.Write("Create web pages that show the message history for each re-created Slack channel? (y|n): ");
                 var copyMessagesResponse = Console.ReadLine();
-                if(copyMessagesResponse.StartsWith("y", StringComparison.CurrentCultureIgnoreCase))
+                if (copyMessagesResponse.StartsWith("y", StringComparison.CurrentCultureIgnoreCase))
                 {
                     Console.Write("Copy files attached to Slack messages to Microsoft Teams? (y|n): ");
                     var copyFileAttachmentsResponse = Console.ReadLine();
-                    if(copyFileAttachmentsResponse.StartsWith("y", StringComparison.CurrentCultureIgnoreCase))
+                    if (copyFileAttachmentsResponse.StartsWith("y", StringComparison.CurrentCultureIgnoreCase))
                     {
                         copyFileAttachments = true;
                     }
-                    
+
                     Console.WriteLine("Scanning users in Slack archive");
                     var slackUserList = Utils.Users.ScanUsers(Path.Combine(slackArchiveBasePath, "users.json"));
                     Console.WriteLine("Scanning users in Slack archive - done");
+                    
 
                     Console.WriteLine("Scanning messages in Slack channels");
                     Utils.Messages.ScanMessagesByChannel(msTeamsChannelsWithSlackProps, slackArchiveTempPath, slackUserList, aadAccessToken, selectedTeamId, copyFileAttachments);
                     Console.WriteLine("Scanning messages in Slack channels - done");
+                    //}
+
+                    Console.Beep(800,10000);
+                    Console.WriteLine("Tasks complete.  Press any key to exit");
+                    Console.ReadKey();
+
+                    Utils.Files.CleanUpTempDirectoriesAndFiles(slackArchiveTempPath);
+                }
+                else
+                {
+                    Console.WriteLine("Please give us a path to your Slack archive: i.e. /path/to/your/slack-archive-zip-file/slack.zip");
+                    Console.WriteLine("Or, give us a path to your channels.json file: i.e. /path/to/your/channels.json");
                 }
 
-                Console.WriteLine("Tasks complete.  Press any key to exit");
-                Console.ReadKey();
-
-                Utils.Files.CleanUpTempDirectoriesAndFiles(slackArchiveTempPath);
             }
-            else
+
+            AuthenticationResult UserLogin()
             {
-                Console.WriteLine("Please give us a path to your Slack archive: i.e. /path/to/your/slack-archive-zip-file/slack.zip");
-                Console.WriteLine("Or, give us a path to your channels.json file: i.e. /path/to/your/channels.json");
+                authenticationContext = new AuthenticationContext
+                        (String.Format(CultureInfo.InvariantCulture, Configuration["AzureAd:AadInstance"], Configuration["AzureAd:TenantId"]));
+                authenticationContext.TokenCache.Clear();
+                DeviceCodeResult deviceCodeResult = authenticationContext.AcquireDeviceCodeAsync(aadResourceAppId, (Configuration["AzureAd:ClientId"])).Result;
+                Console.WriteLine(deviceCodeResult.Message);           
+                return authenticationContext.AcquireTokenByDeviceCodeAsync(deviceCodeResult).Result;
             }
-        }
 
-        static AuthenticationResult UserLogin()
-        {
-            authenticationContext = new AuthenticationContext
-                    (String.Format(CultureInfo.InvariantCulture, Configuration["AzureAd:AadInstance"], Configuration["AzureAd:TenantId"]));
-            authenticationContext.TokenCache.Clear();
-            DeviceCodeResult deviceCodeResult = authenticationContext.AcquireDeviceCodeAsync(aadResourceAppId, (Configuration["AzureAd:ClientId"])).Result;
-            Console.WriteLine(deviceCodeResult.Message);
-            return authenticationContext.AcquireTokenByDeviceCodeAsync(deviceCodeResult).Result;
-        }
 
+
+        }
     }
 }

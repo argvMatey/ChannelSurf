@@ -1,0 +1,46 @@
+try this without importing stuff from slack
+
+create test team in msteams (allegedly it will create a team at runtime optionally - don't see option?)
+
+check which account to use (office365admin?)
+create the channel surf application in azure ad
+	name:ChannelSurfCli
+	application type:native
+	redirect uri: https://channelsurf-cli (default)
+	click create
+	
+	click app's name
+	copy application ID
+	all settings - required permission
+	click add
+	select an api - microsoft graph
+	select permissions
+		read all user's full profiles
+		read and write all groups
+	click select
+	click done
+	
+	take note of tenant name (csquaredsystemsllc.onmicrosoft.com?) -update appsettings.json
+
+recreate slack channels
+	get slack team export (https://my.slack.com/services/export)
+	save file locally (rename to something without spaces)
+	
+update appsettings.json (tenant name(tenantID), ApplicationID(clientId),redirect URI(leave default)
+
+build channelsurfcli
+
+Launch ms teams
+open command prompt, navigate to built channelSurfCli folder
+
+
+profit
+
+
+dotnet run /pathtoslackexport.zip - (only if uncompiled?)
+follow instructions to sign in
+	go to https://aka.ms/devicelogin
+	enter the security code from the command prompt into web
+	consent 
+	enter o365 credentials
+	return to command promptselect target team to re-create channels into, or create new team.
