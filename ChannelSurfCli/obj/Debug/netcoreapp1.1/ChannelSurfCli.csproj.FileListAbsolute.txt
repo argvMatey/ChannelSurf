@@ -1,0 +1,11 @@
+C:\Users\dominic.erickson\Downloads\ChannelSurf-master\ChannelSurfCli\bin\Debug\netcoreapp1.1\ChannelSurfCli.deps.json
+C:\Users\dominic.erickson\Downloads\ChannelSurf-master\ChannelSurfCli\bin\Debug\netcoreapp1.1\ChannelSurfCli.runtimeconfig.json
+C:\Users\dominic.erickson\Downloads\ChannelSurf-master\ChannelSurfCli\bin\Debug\netcoreapp1.1\ChannelSurfCli.runtimeconfig.dev.json
+C:\Users\dominic.erickson\Downloads\ChannelSurf-master\ChannelSurfCli\bin\Debug\netcoreapp1.1\ChannelSurfCli.dll
+C:\Users\dominic.erickson\Downloads\ChannelSurf-master\ChannelSurfCli\bin\Debug\netcoreapp1.1\ChannelSurfCli.pdb
+C:\Users\dominic.erickson\Downloads\ChannelSurf-master\ChannelSurfCli\obj\Debug\netcoreapp1.1\ChannelSurfCli.csprojResolveAssemblyReference.cache
+C:\Users\dominic.erickson\Downloads\ChannelSurf-master\ChannelSurfCli\obj\Debug\netcoreapp1.1\ChannelSurfCli.csproj.CoreCompileInputs.cache
+C:\Users\dominic.erickson\Downloads\ChannelSurf-master\ChannelSurfCli\obj\Debug\netcoreapp1.1\ChannelSurfCli.AssemblyInfo.cs
+C:\Users\dominic.erickson\Downloads\ChannelSurf-master\ChannelSurfCli\obj\Debug\netcoreapp1.1\ChannelSurfCli.dll
+C:\Users\dominic.erickson\Downloads\ChannelSurf-master\ChannelSurfCli\obj\Debug\netcoreapp1.1\ChannelSurfCli.pdb
+C:\Users\dominic.erickson\Downloads\ChannelSurf-master\ChannelSurfCli\obj\Debug\netcoreapp1.1\ChannelSurfCli.AssemblyInfoInputs.cache

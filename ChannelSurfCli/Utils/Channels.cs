@@ -39,7 +39,8 @@ namespace ChannelSurfCli.Utils
                         slackChannels.Add(new Models.Slack.Channels()
                         {
                             channelId = channelId,
-                            channelName = obj["name"].ToString(),
+                            //channelName = obj["name"].ToString(),
+                            channelName = "General",
                             channelDescription = obj["purpose"]["value"].ToString()
                         });
 

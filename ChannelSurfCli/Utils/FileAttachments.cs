@@ -61,7 +61,7 @@ namespace ChannelSurfCli.Utils
                 {
                     fileToUpload = combinedAttachmentsMapping.attachmentUrl;
                 }
-                var pathToItem = "/" + combinedAttachmentsMapping.msChannelName + "/channelsurf/fileattachments/" + combinedAttachmentsMapping.attachmentId + "/" + combinedAttachmentsMapping.attachmentFileName;
+                var pathToItem = "/" + combinedAttachmentsMapping.msChannelName + "/slackArchive/fileattachments/" + combinedAttachmentsMapping.attachmentId + "/" + combinedAttachmentsMapping.attachmentFileName;
                 fileIdAndUrl = await UploadFileToTeamsChannel(aadAccessToken, selectedTeamId, fileToUpload, pathToItem);
                 combinedAttachmentsMapping.msSpoId = fileIdAndUrl.Item1;
                 combinedAttachmentsMapping.msSpoUrl = fileIdAndUrl.Item2;
@@ -110,7 +110,7 @@ namespace ChannelSurfCli.Utils
         {
             var authHelper = new Utils.O365.AuthenticationHelper() { AccessToken = aadAccessToken };
             Microsoft.Graph.GraphServiceClient gcs = new Microsoft.Graph.GraphServiceClient(authHelper);
-
+            
             var fileExists = CheckIfFileExistsOnTeamsChannel(aadAccessToken, selectedTeamId, pathToItem);
             if (fileExists.Item1 != "") 
             {
@@ -146,7 +146,6 @@ namespace ChannelSurfCli.Utils
                     var trackedExceptions = new List<Exception>();
 
                     Microsoft.Graph.DriveItem itemResult = null;
-
                     //upload the chunks
                     foreach (var request in chunkRequests)
                     {

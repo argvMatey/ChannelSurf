@@ -1,20 +1,20 @@
 ﻿[
   {
-    "name": "my custom channel",
+    "name": "test channel 4",
     "purpose": {
-      "value": "my custom channel description"
+      "value": "testing channel creation"
     }
   },
   {
-    "name": "my other channel",
+    "name": "test channel 5",
     "purpose": {
-      "value": "my other channel description"
+      "value": "testing channel creation"
     }
   },
   {
-    "name": "my unique channel",
+    "name": "test channel 6",
     "purpose": {
-      "value": "my unique channel description"
+      "value": "testing channel creation"
     }
   }
 ]
